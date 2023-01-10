@@ -40,10 +40,73 @@ function prettyPrint(node, prefix = "", isLeft = true) {
   }
 }
 
-let arr = [1,1,3,2,,5,3,4,9,8,5,6,5,219,22,11,13];
+function insert(root,val) {
+  let value = parseInt(val);
+  if (root === null) {
+    let root = new Node(value);
+    return root;
+  } else if (root.data > value) {
+    root.left = insert(root.left, value);
+  } else if (root.data < value){
+    root.right = insert(root.right, value);
+  }
+  return root;
+}
+
+function minValueNode(node) {
+  let current = node;
+  while(current.left !== null) {
+    current = current.left;
+  }
+  return current;
+}
+
+function deleteNode(root,val) {
+  let value = parseInt(val);
+  if(root === null) {
+    return root;
+  } if (root.data > value) {
+    root.left = deleteNode(root.left,value);
+  } else if (root.data < value) {
+    root.right = deleteNode(root.right, value);
+  } else {
+    if (root.left === null && root.right === null) {
+      return null;
+    } else if (root.right === null) {
+      let nodeL = root.left;
+      root = null;
+      return nodeL;
+    } else if (root.right === null) {
+      let nodeR = root.right; 
+      root = null;
+      return nodeR;
+    } 
+    let node = minValueNode(root.right);
+    root.data = node.data;
+    root.right = deleteNode(root.right, node.data);
+  }
+  return root;
+}
+
+function find(root, val) {
+  let value = parseInt(val);
+  if (root === null || root.data === value) {
+    return root;
+  } if (root.data < value) {
+    return find(root.right, value);
+  } return find(root.left, value);
+}
+
+let arr = [1,1,3,2,5,3,4,9,8,5,6,5];
 let sortedArr = sortNoDupes(arr);
 let len = sortedArr.length;
 let newTree = new Tree(sortedArr);
 newTree.root = buildTree(sortedArr, 0, len -1);
 console.log(newTree.root);
 prettyPrint(newTree.root);
+insert(newTree.root, 7);
+prettyPrint(newTree.root);
+deleteNode(newTree.root, 3);
+prettyPrint(newTree.root);
+find(newTree.root, 7);
+

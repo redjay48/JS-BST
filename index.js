@@ -109,6 +109,46 @@ function printNode(value) {
   console.log(value);
 }
 
+function height(root) {
+  let count = 0;
+  let queue = [];
+  queue.push(root);
+  queue.push(null);
+  while(queue.length > 0) {
+    let temp = queue.shift();
+    
+    if(temp === null) {
+      count++;
+    }
+    if(temp !== null) {
+      if(temp.left) {
+        queue.push(temp.left);
+      } if(temp.right) {
+        queue.push(temp.right);
+      }
+    } else if( queue.length > 0) {
+      queue.push(null);
+    }
+  }
+  return count - 1;
+
+}
+
+function depth(root) {
+  if(root === null) {
+    return 0;
+  }
+  else {
+    leftDepth = depth(root.left);
+    rightDepth = depth(root.right);
+    if(leftDepth > rightDepth) {
+      return leftDepth + 1;
+    } else {
+      return rightDepth + 1;
+    }
+  }
+}
+
 function deleteNode(root,val) {
   let value = parseInt(val);
   if(root === null) {

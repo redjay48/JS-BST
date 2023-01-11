@@ -61,6 +61,54 @@ function minValueNode(node) {
   return current;
 }
 
+function levelOrder(root, fn) {
+  if(root === null) {
+    return;
+  }
+  let queue = [];
+  queue.push(root);
+  while(queue.length > 0) {
+    let node = queue.shift();
+    fn(node.data);
+    if(node.left !== null) {
+      queue.push(node.left);
+    } if(node.right !== null) {
+      queue.push(node.right);
+    }
+  }
+}
+
+function preOrder(root, fn) {
+  if(root === null) {
+    return;
+  }
+  fn(root.data);
+  preorder(root.left, fn);
+  preorder(root.right, fn);
+}
+
+function inOrder(root, fn) {
+  if(root === null) {
+    return;
+  }
+  inOrder(root.left, fn);
+  fn(root.data);
+  inOrder(root.right, fn);
+}
+
+function postOrder(root, fn) {
+  if(root === null) {
+    return;
+  }
+  postOrder(root.left, fn);
+  postOrder(root.right, fn);
+  fn(root.data);
+}
+
+function printNode(value) {
+  console.log(value);
+}
+
 function deleteNode(root,val) {
   let value = parseInt(val);
   if(root === null) {
@@ -97,6 +145,8 @@ function find(root, val) {
   } return find(root.left, value);
 }
 
+
+
 let arr = [1,1,3,2,5,3,4,9,8,5,6,5];
 let sortedArr = sortNoDupes(arr);
 let len = sortedArr.length;
@@ -109,4 +159,5 @@ prettyPrint(newTree.root);
 deleteNode(newTree.root, 3);
 prettyPrint(newTree.root);
 find(newTree.root, 7);
+levelOrder(newTree.root, printNode);
 

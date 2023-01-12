@@ -274,6 +274,7 @@ function empthArrays() {
 
 function driver() {
   let array = createRandomArray();
+  console.log(array);
   sortedArray = sortNoDupes(array);
   let arrayLength = sortedArray.length;
   let binaryTree = new Tree(sortedArray);
